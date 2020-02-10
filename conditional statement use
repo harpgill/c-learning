@@ -1,0 +1,20 @@
+#include <stdio.h>
+void main()
+{
+	int p1,p2;
+
+	printf("values for X and Y coordinate : ");
+	scanf("%d %d",&p1,&p2);
+
+	if( p1 > 0 && p2 > 0)
+	  printf("The coordinate point (%d,%d) lies in the First quandrant.\n",p1,p2);
+	else if( p1 < 0 && p2 > 0)
+	  printf("The coordinate point (%d,%d) lies in the Second quandrant.\n",p1,p2);
+	else if( p1 < 0 && p2 < 0)
+	  printf("The coordinate point (%d, %d) lies in the Third quandrant.\n",p1,p2);
+	else if( p1 > 0 && p2 < 0)
+	  printf("The coordinate point (%d,%d) lies in the Fourth quandrant.\n",p1,p2);
+	else if( p1 == 0 && p2 == 0)
+	  printf("The coordinate point (%d,%d) lies at the origin.\n",p1,p2);
+
+}
