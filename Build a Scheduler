@@ -1,0 +1,18 @@
+//creates a function pointer fp which can point to any function which returns 
+    //an int and has three arguments which are char, int, double respectively.
+    //With function pointers we can write code that can start an arbitrary function.
+
+void start_function(void (*functionPTR)() )
+{
+functionPTR();
+}
+
+//Now our basic scheduler could be written:
+
+while(1)
+{
+start_function( taskA);
+start_function( taskB);
+start_function( taskC);
+time_delay();
+}
