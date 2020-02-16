@@ -1,0 +1,12 @@
+void scheduler();
+#define NTASKS 4
+void (*readytasks[NTASKS]) (void *p);
+main()
+{
+readytasks[0] = taskA;
+readytasks[1] = taskB;
+readytasks[3]= NULL; 
+while(1) {
+scheduler();
+time_delay(); 
+}
