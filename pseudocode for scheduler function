@@ -1,0 +1,9 @@
+scheduler() {
+if(readytasks[task_index] == NULL && task_index != 0) task_index=0;
+if(readytasks[task_index] == NULL && task_index == 0) {
+// figure out something to do because there are no tasks to run!
+}
+start_function(readytasks[task_index]);
+task_index++; // Round Robin/we’re taking turns
+return;
+}
