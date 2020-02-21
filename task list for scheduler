@@ -1,0 +1,10 @@
+halt_me() {
+TaskList[t_curr].state = STATE_INACTIVE;
+}
+start_task(int task_id) {
+TaskList[task_id].state = STATE_READY;
+}
+delay(int d) {
+TaskList[t_curr].delay = d;
+TaskList[t_curr].state = STATE_WAITING;
+}
