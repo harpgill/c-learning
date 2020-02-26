@@ -1,0 +1,15 @@
+int j=0;
+int task_B_Arg;
+TaskList[j].ftpr = task_A();
+TaskList[j].arg_ptr = NULL;
+TaskList[j].state = STATE_INACTIVE;
+TaskList[j].delay = -1;
+j++;
+TaskList[j].ftpr = task_B();
+task_B_Arg = 56; // some arbitrary value
+int *ip = &task_B_Arg;
+TaskList[j].arg_ptr = (void*)ip;
+TaskList[j].state = STATE_READY;
+TaskList[j].delay = -1;
+j++;
+TaskList[j].fptr = NULL;
