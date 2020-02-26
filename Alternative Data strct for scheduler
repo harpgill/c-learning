@@ -1,0 +1,6 @@
+typedef struct TCBstruct {
+void (*ftpr)(void *p); // the function pointer
+void *arg_ptr; // the argument pointer
+unsigned short int state; // the task state
+unsigned int delay; // sleep delay
+} tcb;
