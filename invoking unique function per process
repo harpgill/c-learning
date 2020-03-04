@@ -1,0 +1,129 @@
+uint32_t spinTillTime0SecChange(void)
+  {
+     uint32_t spin_count = 1; // time(0) invocation count
+
+     // no measurement, just spinning
+     time_t t0 = time(0);
+     time_t t1 = t0;
+
+     while (t0 == t1)
+     {
+        t1 = time(0);
+        spin_count += 1;
+        DTB::msPause(10);  // uses usleep()
+     }
+     return(spin_count);
+  }
+
+
+  void child0(int i)
+  {
+     std::cout << "child0() start " << std::endl;
+     int k = 0;
+     time_t t0 = time(0) + 10; // spin for 10 seconds
+     do {
+        std::cout << "child0() " << i << "." << k++ << std::endl;
+        (void)spinTillTime0SecChange();
+        if (time(0) == t0) break;
+     }while(1);
+     exit(0);   // do not return
+  }
+
+  void child1(int i)
+  {
+     std::cout << "child1() start " << std::endl;
+     int k = 0;
+     time_t t0 = time(0) + 10; // spin for 10 seconds
+     do {
+        std::cout << "child1() " << i << "." << k++ << std::endl;
+        (void)spinTillTime0SecChange();
+        if (time(0) == t0) break;
+     }while(1);
+     exit(0);   // do not return
+  }
+
+  void child2(int i)
+  {
+     std::cout << "child2() start " << std::endl;
+     int k = 0;
+     time_t t0 = time(0) + 10; // spin for 10 seconds
+     do {
+        std::cout << "child2() " << i << "." << k++ << std::endl;
+        (void)spinTillTime0SecChange();
+        if (time(0) == t0) break;
+     }while(1);
+     exit(0);   // do not return
+  }
+
+  void child3(int i)
+  {
+     std::cout << "child3() start " << std::endl;
+     int k = 0;
+     time_t t0 = time(0) + 10; // spin for 10 seconds
+     do {
+        std::cout << "child3() " << i << "." << k++ << std::endl;
+        (void)spinTillTime0SecChange();
+        if (time(0) == t0) break;
+     }while(1);
+     exit(0);   // do not return
+  }
+
+  void child4(int i)
+  {
+     std::cout << "child4() start " << std::endl;
+     int k = 0;
+     time_t t0 = time(0) + 10; // spin for 10 seconds
+     do {
+        std::cout << "child4() " << i << "." << k++ << std::endl;
+        (void)spinTillTime0SecChange();
+        if (time(0) == t0) break;
+     }while(1);
+     exit(0);   // do not return
+  }
+
+
+  int main(int /*argc*/, char** /*argv[]*/ )
+  {
+     uint32_t retVal = 0;
+
+     std::cout << std::endl;
+
+     for (int i = 0; i<5; ++i)
+     {
+        pid_t childPID = fork();
+
+        if(childPID == 0) // when 0 returned: child context
+        {
+           switch (i) // from loop, choose what this child will run
+           {
+           case 0: { child0(i); } break;
+           case 1: { child1(i); } break;
+           case 2: { child2(i); } break;
+           case 3: { child3(i); } break;
+           case 4: { child4(i); } break;
+
+           default:
+           {
+              std::cerr << "out of range i: " << i << std::endl;
+              DTB::msPause(10); // uses usleep
+           }
+           break;
+
+           } // switch (i)
+        }
+
+        dtbAssert(childPID >= 0)(childPID); // error check
+     }
+
+     // parent context
+     std::cout << "parent() context after fork" << std::endl;
+     int k = 0;
+     time_t t0 = time(0) + 13; // spin for 13 seconds
+     do {
+        std::cout << "parent() " << " " << " " << k++ << std::endl;
+        (void)spinTillTime0SecChange();
+        if (time(0) == t0) break;
+     }while(1);
+
+     return(retVal);
+  }
